@@ -5,7 +5,7 @@ import authMiddleware from "./middlewares/auth.middleware.js";
 import authController from "./controllers/auth.controller.js";
 import uploadConfig from "../config/upload.config.js";
 import userController from "./controllers/user.controller.js";
-import productController from "./controllers/service.controller.js";
+import productController from "./controllers/product.controller.js";
 import orderController from "./controllers/order.controller.js";
 import contactController from "./controllers/contact.controller.js";
 
@@ -31,6 +31,7 @@ router.delete("/users/:id", userController.deleteUser);
 
 // products management
 router.get("/products", productController.searchProducts);
+/*
 router.post("/products", upload.single("image"), productController.addProduct);
 router.get("/products/:id", productController.getDetailProduct);
 router.put(
@@ -38,7 +39,7 @@ router.put(
     upload.single("image"),
     productController.updateProduct
 );
-router.delete("/products/:id", productController.deleteProduct);
+router.delete("/products/:id", productController.deleteProduct); **/
 
 // orders management
 router.get("/orders", orderController.searchOrders);

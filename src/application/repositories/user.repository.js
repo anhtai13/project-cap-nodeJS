@@ -25,7 +25,7 @@ const searchUsers = (params, callback) => {
             callback(error, null);
         } else if (countResult[0].total !== 0) {
             const selectColumnsQuery =
-                "SELECT id, username, email, first_name, last_name, role, avatar, created_at, created_by, updated_at, updated_by" +
+                "SELECT user_id, username, email, first_name, last_name, role, avatar,address_user, created_at, created_by_id, updated_at, updated_by_id" +
                 sql +
                 ` LIMIT ${limit} OFFSET ${offset}`;
             connection.query(
@@ -35,10 +35,13 @@ const searchUsers = (params, callback) => {
                     if (error) {
                         callback(error, null);
                     } else {
-                        callback(null, {
-                            total: countResult[0].total,
-                            records: result,
-                        });
+                        callback(
+                            null,
+                            // {
+                            // total: countResult[0].total,
+                            // records: result,}
+                            "success"
+                        );
                     }
                 }
             );
@@ -82,7 +85,7 @@ const getDetailUser = (id, callback) => {
     const connection = getConnection();
 
     connection.query(
-        "SELECT id, username, email, first_name, last_name, role, avatar, created_at, created_by, updated_at, updated_by FROM users WHERE id = ?",
+        "SELECT user_id, username, email, first_name, last_name, role, avatar, created_at, created_by_id, updated_at, updated_by_id FROM users WHERE user_id = ?",
         [id],
         (error, result) => {
             if (error) {
@@ -100,7 +103,7 @@ const getUserByUsernameAndRole = (username, role, callback) => {
     const connection = getConnection();
 
     connection.query(
-        "SELECT id, username, email, password, role FROM users WHERE username = ? AND role = ?",
+        "SELECT user_id, username, email, password, role FROM users WHERE username = ? AND role = ?",
         [username, role],
         (error, result) => {
             if (error) {
@@ -118,7 +121,7 @@ const getUserByApiKey = (apiKey, callback) => {
     const connection = getConnection();
 
     connection.query(
-        "SELECT id, username, email, password, role, avatar, created_at, created_by, updated_at, updated_by FROM users WHERE api_key = ?",
+        "SELECT user_id, username, email, password, role, avatar, created_at, created_by_id, updated_at, updated_by_id FROM users WHERE api_key = ?",
         [apiKey],
         (error, result) => {
             if (error) {
@@ -136,7 +139,7 @@ const createApiKey = (userId, apiKey, callback) => {
     const connection = getConnection();
 
     connection.query(
-        "UPDATE users SET api_key = ? WHERE id = ?",
+        "UPDATE users SET api_key = ? WHERE user_id = ?",
         [apiKey, userId],
         (error, result) => {
             if (error) {
@@ -154,12 +157,12 @@ const updateUser = (userId, params, callback) => {
     const connection = getConnection();
 
     let sql =
-        "UPDATE users SET first_name = ?, last_name = ?, role = ?, updated_by = ?";
+        "UPDATE users SET first_name = ?, last_name = ?, role = ?, updated_by_id = ?";
     let bindParams = [
         params.first_name,
         params.last_name,
         params.role,
-        params.updated_by,
+        params.updated_by_id,
     ];
 
     if (params.password) {
@@ -171,7 +174,7 @@ const updateUser = (userId, params, callback) => {
         bindParams.push(params.avatar);
     }
 
-    sql += " WHERE id = ?";
+    sql += " WHERE user_id = ?";
     bindParams.push(userId);
 
     connection.query(sql, bindParams, (error, result) => {
@@ -189,7 +192,7 @@ const deleteUser = (id, callback) => {
     const connection = getConnection();
 
     connection.query(
-        "DELETE FROM users WHERE id = ?",
+        "DELETE FROM users WHERE user_id = ?",
         [id],
         (error, result) => {
             if (error) {

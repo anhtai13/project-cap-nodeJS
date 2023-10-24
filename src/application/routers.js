@@ -5,7 +5,6 @@ import authMiddleware from "./middlewares/auth.middleware.js";
 import authController from "./controllers/auth.controller.js";
 import uploadConfig from "../config/upload.config.js";
 import userController from "./controllers/user.controller.js";
-import productController from "./controllers/service.controller.js";
 import orderController from "./controllers/order.controller.js";
 import contactController from "./controllers/contact.controller.js";
 import serviceController from "./controllers/service.controller.js";
@@ -34,11 +33,7 @@ router.delete("/users/:id", userController.deleteUser);
 router.get("/services", serviceController.searchServices);
 router.post("/services", upload.single("image"), serviceController.addService);
 router.get("/services/:id", serviceController.getDetailService);
-router.put(
-    "/services/:id",
-    upload.single("image"),
-    serviceController.updateService
-);
+router.put("/services/:id",upload.single("image"),serviceController.updateService);
 router.delete("/services/:id", serviceController.deleteService);
 
 // orders management

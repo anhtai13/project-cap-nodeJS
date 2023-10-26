@@ -1,9 +1,9 @@
-import contactService from "./../services/contact.service.js";
+import evaluateService from "../services/evaluate.service.js";
 
-const searchContacts = (request, response) => {
+const searchEvaluates = (request, response) => {
     const { name, page, limit } = request.query;
 
-    contactService.searchContacts(
+    evaluateService.searchEvaluates(
         { name: name, page: page, limit: limit },
         (error, result) => {
             if (error) {
@@ -17,7 +17,7 @@ const searchContacts = (request, response) => {
     );
 };
 
-const addContact = (request, response) => {
+const addEvaluates = (request, response) => {
     if (request.auth.role !== 1) {
         response.status(403).send({
             error: "Không có quyền truy cập",
@@ -28,7 +28,7 @@ const addContact = (request, response) => {
     const requestBody = request.body;
     const image = request.file;
 
-    contactService.addContact(
+    evaluateService.addEvaluates(
         {
             ...requestBody,
             authId: request.auth.id,
@@ -43,7 +43,7 @@ const addContact = (request, response) => {
     );
 };
 
-const getDetailContact = (request, response) => {
+const getDetailEvaluates = (request, response) => {
     if (request.auth.role !== 1) {
         response.status(403).send({
             error: "Không có quyền truy cập",
@@ -53,7 +53,7 @@ const getDetailContact = (request, response) => {
 
     const { id } = request.params;
 
-    contactService.getDetailContact(id, (error, result) => {
+    evaluateService.getDetailEvaluates(id, (error, result) => {
         if (error) {
             response.status(500).send({
                 error: error.message,
@@ -64,7 +64,7 @@ const getDetailContact = (request, response) => {
     });
 };
 
-const updateContact = (request, response) => {
+const updateEvaluates = (request, response) => {
     if (request.auth.role !== 1) {
         response.status(403).send({
             error: "Không có quyền truy cập",
@@ -72,12 +72,12 @@ const updateContact = (request, response) => {
         return;
     }
 
-    const contactId = request.params.id;
+    const evaluateId = request.params.id;
 
     const requestBody = request.body;
 
-    contactService.updateContact(
-        contactId,
+    evaluateService.updateEvaluates(
+        evaluateId,
         {
             ...requestBody,
         },
@@ -93,7 +93,7 @@ const updateContact = (request, response) => {
     );
 };
 
-const deleteContact = (request, response) => {
+const deleteEvaluates = (request, response) => {
     if (request.auth.role !== 1) {
         response.status(403).send({
             error: "Không có quyền truy cập",
@@ -103,7 +103,7 @@ const deleteContact = (request, response) => {
 
     const { id } = request.params;
 
-    contactService.deleteContact(id, (error, result) => {
+    evaluateService.deleteEvaluates(id, (error, result) => {
         if (error) {
             response.status(500).send({
                 error: error.message,
@@ -115,9 +115,9 @@ const deleteContact = (request, response) => {
 };
 
 export default {
-    searchContacts,
-    addContact,
-    updateContact,
-    getDetailContact,
-    deleteContact,
+    searchEvaluates,
+    addEvaluates,
+    updateEvaluates,
+    getDetailEvaluates,
+    deleteEvaluates,
 };

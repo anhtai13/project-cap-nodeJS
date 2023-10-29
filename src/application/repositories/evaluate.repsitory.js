@@ -138,11 +138,37 @@ const deleteEvaluates = (id, callback) => {
     );
     connection.end();
 };
-
+// [GET] get rate evluates đánh giá 5 sao
+ const getRateEvaluates = (id, callback) => {
+    const connection = getConnection();
+      connection.query('SELECT * FROM evaluates WHERE evaluate_id = ?', [id],
+    (error, results) => {
+        if (error) {
+          return callback(error, null);
+        }
+        return callback(null, results);
+      });   
+      connection.end();
+  };
+  // [POST] add rate evluates 
+  const addRateEvaluates = (user_id, rate, callback) => {
+    const connection = getConnection();
+    connection.query('INSERT INTO evaluates (user_id, rate) VALUES (?, ?)', [user_id, rate], (error, result) => {
+      if (error) {
+        callback(error, null);
+      } else {
+        callback(null, result.insertId);
+      }
+    });
+    connection.end();
+  };
+  
 export default {
     searchEvaluates,
     addEvaluates,
     updateEvaluates,
     getDetailEvaluates,
     deleteEvaluates,
+    getRateEvaluates,
+    addRateEvaluates,
 };

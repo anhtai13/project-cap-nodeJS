@@ -1,3 +1,4 @@
+import e from "cors";
 import evaluateService from "../services/evaluate.service.js";
 
 const searchEvaluates = (request, response) => {
@@ -113,6 +114,37 @@ const deleteEvaluates = (request, response) => {
         }
     });
 };
+// get rate evaluates controller
+const getRateEvaluates = (request, response) => {
+    evaluateService.getRateEvaluates((error, result) => {
+        if(error){
+            response.status(500).send({
+                error: error.message,
+            });
+        }else {
+            response.status(200).send();
+        }
+    });
+};
+// add rate evaluates controller
+const addRateEvaluates = (request, response) => {
+    if (request.auth.role !== 2) {
+        response.status(403).send({
+            error: "Không có quyền truy cập",
+        });
+        return;
+    }
+    const { user_id , rate } = request.params;
+    evaluateService.addRateEvaluates(user_id,rate, (error,result) =>{
+        if(error){
+            response.status(500).send({
+                error: error.message,
+            });
+        }else{
+            response.status(201).send();
+        }
+    });
+};
 
 export default {
     searchEvaluates,
@@ -120,4 +152,6 @@ export default {
     updateEvaluates,
     getDetailEvaluates,
     deleteEvaluates,
+    getRateEvaluates,
+    addRateEvaluates,
 };

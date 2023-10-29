@@ -45,7 +45,7 @@ const addEvaluates = (requestBody, callback) => {
             updated_id: requestBody.authId,
         };
 
-        evaluateRepositoryRepository.addEvaluates(newEvaluate, (error, result) => {
+        evaluateRepository.addEvaluates(newEvaluate, (error, result) => {
             if (path) {
                 fs.rmSync(path);
             }
@@ -137,6 +137,65 @@ const deleteEvaluates = (id, callback) => {
         });
     }
 };
+// get rate evaluates
+const getRateEvaluates = (id, callback) => {
+    if (!/^[0-9]+$/.test(id)) {
+        callback({ message: "ID phải là số" }, null);
+    } else {
+        evaluateRepository.getRateEvaluates(id, (error, result) => {
+            if (error) {
+                callback(error, null);
+            } else if (result.length === 0) {
+                callback({ message: "evaluate not found" }, null);
+            } else {
+                callback(null, result);
+            }
+        });
+    }
+};
+// add rate evaluates 
+const addRateEvaluates = (requestBody, callback) => {
+    const validate = (params) => {
+        let errors = new Map();
+
+        // Validate user ID
+        if (!params.user_id) {
+            errors.set("user_id", "ID người dùng không được bỏ trống.");
+        } else if (!/^[0-9]+$/.test(params.user_id)) {
+            errors.set("user_id", "ID người dùng phải là số.");
+        }
+
+        // Validate rating
+        if (!params.rating) {
+            errors.set("rating", "Đánh giá không được bỏ trống.");
+        } else if (typeof params.rating !== "number" || params.rating < 1 || params.rating > 5) {
+            errors.set("rating", "Đánh giá phải là một số từ 1 đến 5.");
+        }
+
+        return errors;
+    };
+
+    const validateErrors = validate(requestBody);
+
+    if (validateErrors.size !== 0) {
+        callback(Object.fromEntries(validateErrors), null);
+    } else {
+        const newRating = {
+            user_id: requestBody.user_id,
+            rating: requestBody.rating,
+        };
+
+        // Gọi phương thức addRating của evaluateRepositoryRepository (bạn cần xác định đúng tên thực tế)
+        evaluateRepository.addRating(newRating, (error, result) => {
+            if (error) {
+                callback(error, result);
+            } else {
+                callback(null, result);
+            }
+        });
+    }
+};
+
 
 export default {
     searchEvaluates,
@@ -144,4 +203,6 @@ export default {
     updateEvaluates,
     getDetailEvaluates,
     deleteEvaluates,
+    getRateEvaluates,
+    addRateEvaluates,
 };

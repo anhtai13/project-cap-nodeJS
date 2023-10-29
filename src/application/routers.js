@@ -5,7 +5,6 @@ import authController from "./controllers/auth.controller.js";
 import uploadConfig from "../config/upload.config.js";
 import userController from "./controllers/user.controller.js";
 import orderController from "./controllers/order.controller.js";
-import contactController from "./controllers/contact.controller.js";
 import serviceController from "./controllers/service.controller.js";
 import evaluateController from "./controllers/evaluate.controller.js";
 
@@ -45,12 +44,6 @@ router.get("/orders/:id", orderController.getDetailOrder);
 router.put("/orders/:id", orderController.updateOrder);
 router.delete("/orders/:id", orderController.deleteOrder);
 
-// contacts management
-router.get("/contacts", contactController.searchContacts);
-router.post("/contacts", contactController.addContact);
-router.get("/contacts/:id", contactController.getDetailContact);
-router.put("/contacts/:id", contactController.updateContact);
-router.delete("/contacts/:id", contactController.deleteContact);
 // evaluates management
 router.get("/evaluates", evaluateController.searchEvaluates);
 router.post("/evaluates", evaluateController.addEvaluates);

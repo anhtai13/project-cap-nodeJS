@@ -167,9 +167,9 @@ const addRateEvaluates = (requestBody, callback) => {
 
         // Validate rating
         if (!params.rating) {
-            errors.set("rating", "Đánh giá không được bỏ trống.");
-        } else if (typeof params.rating !== "number" || params.rating < 1 || params.rating > 5) {
-            errors.set("rating", "Đánh giá phải là một số từ 1 đến 5.");
+            errors.set("rate", "Đánh giá không được bỏ trống.");
+        } else if (typeof params.rate !== "number" || params.rate < 1 || params.rate > 5) {
+            errors.set("rate", "Đánh giá phải là một số từ 1 đến 5.");
         }
 
         return errors;
@@ -180,13 +180,13 @@ const addRateEvaluates = (requestBody, callback) => {
     if (validateErrors.size !== 0) {
         callback(Object.fromEntries(validateErrors), null);
     } else {
-        const newRating = {
+        const newRate = {
             user_id: requestBody.user_id,
-            rating: requestBody.rating,
+            rating: requestBody.rate,
         };
 
-        // Gọi phương thức addRating của evaluateRepositoryRepository (bạn cần xác định đúng tên thực tế)
-        evaluateRepository.addRating(newRating, (error, result) => {
+        // Gọi phương thức addRating của evaluateRepository
+        evaluateRepository.addRateEvaluates(newRate, (error, result) => {
             if (error) {
                 callback(error, result);
             } else {

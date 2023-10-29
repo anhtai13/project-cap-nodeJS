@@ -38,7 +38,6 @@ export default function (request, response, next) {
                     // Nếu xác thực thành công, lưu thông tin người dùng vào request.auth và tiếp tục xử lý yêu cầu
                     const auth = result[0];
                     request.auth = auth;
-
                     next();
                 }
             });

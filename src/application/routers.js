@@ -1,13 +1,12 @@
 import { Router } from "express";
 import multer from "multer";
-
 import authMiddleware from "./middlewares/auth.middleware.js";
 import authController from "./controllers/auth.controller.js";
 import uploadConfig from "../config/upload.config.js";
 import userController from "./controllers/user.controller.js";
-import productController from "./controllers/product.controller.js";
 import orderController from "./controllers/order.controller.js";
 import contactController from "./controllers/contact.controller.js";
+import serviceController from "./controllers/service.controller.js";
 
 const upload = multer(uploadConfig);
 
@@ -29,17 +28,13 @@ router.get("/users/:id", userController.getDetailUser);
 router.put("/users/:id", upload.single("avatar"), userController.updateUser);
 router.delete("/users/:id", userController.deleteUser);
 
-// products management
-router.get("/products", productController.searchProducts);
-/*
-router.post("/products", upload.single("image"), productController.addProduct);
-router.get("/products/:id", productController.getDetailProduct);
-router.put(
-    "/products/:id",
-    upload.single("image"),
-    productController.updateProduct
-);
-router.delete("/products/:id", productController.deleteProduct); **/
+
+// services management
+router.get("/services", serviceController.searchServices);
+router.post("/services", upload.single("image"), serviceController.addService);
+router.get("/services/:id", serviceController.getDetailService);
+router.put("/services/:id",upload.single("image"),serviceController.updateService);
+router.delete("/services/:id", serviceController.deleteService);
 
 // orders management
 router.get("/orders", orderController.searchOrders);

@@ -1,14 +1,14 @@
-import contactRepository from "../repositories/contact.repsitory.js";
+import evaluateRepository from "../repositories/evaluate.repsitory.js";
 import fs from "fs";
 import { getFileExtension } from "../../utilities/upload.util.js";
 
-const searchContacts = (params, callback) => {
+const searchEvaluates = (params, callback) => {
     if (params.limit && !/^[0-9]+$/.test(params.limit)) {
         callback({ message: "Limit is number" }, null);
     } else if (params.pager && !/^[0-9]+$/.test(params.page)) {
         callback({ message: "Page is number" }, null);
     } else {
-        contactRepository.searchContacts(params, (error, result) => {
+        evaluateRepository.searchEvaluates(params, (error, result) => {
             if (error) {
                 callback(error, null);
             } else {
@@ -18,7 +18,7 @@ const searchContacts = (params, callback) => {
     }
 };
 
-const addContact = (requestBody, callback) => {
+const addEvaluates = (requestBody, callback) => {
     const validate = (params) => {
         let errors = new Map();
 
@@ -36,7 +36,7 @@ const addContact = (requestBody, callback) => {
     if (validateErrors.size !== 0) {
         callback(Object.fromEntries(validateErrors), null);
     } else {
-        const newContact = {
+        const newEvaluate = {
             full_name: requestBody.full_name,
             email: requestBody.email,
             status: requestBody.status,
@@ -45,7 +45,7 @@ const addContact = (requestBody, callback) => {
             updated_id: requestBody.authId,
         };
 
-        contactRepositoryRepository.addContact(newContact, (error, result) => {
+        evaluateRepositoryRepository.addEvaluates(newEvaluate, (error, result) => {
             if (path) {
                 fs.rmSync(path);
             }
@@ -58,7 +58,7 @@ const addContact = (requestBody, callback) => {
     }
 };
 
-const updateContact = (contactId, requestBody, callback) => {
+const updateEvaluates = (evaluateId, requestBody, callback) => {
     const validate = (params) => {
         let errors = new Map();
 
@@ -70,9 +70,7 @@ const updateContact = (contactId, requestBody, callback) => {
         }
 
         if (typeof params.status !== "string") {
-            errors.set("status", "Vai trò phải là chuỗi.");
-        } else if (params.category !== "1" && params.category !== "2") {
-            errors.set("category", "Vai trò chỉ cho phép nhập 1, 2");
+            errors.set("rate", "Vai trò phải là kiểu số.");
         }
 
         return errors;
@@ -83,18 +81,17 @@ const updateContact = (contactId, requestBody, callback) => {
     if (validateErrors.size !== 0) {
         callback(Object.fromEntries(validateErrors), null);
     } else {
-        const updateContact = {
-            sku: requestBody.sku,
-            name: requestBody.name,
-            category: requestBody.category,
-            description: requestBody.description,
-            unit_price: requestBody.unit_price,
+        const updateEvaluates = {
+            full_namename: requestBody.full_name,
+            email: requestBody.email,
+            content: requestBody.content,
+            rate: requestBody.rate,
             updated_by_id: requestBody.authId,
         };
 
-        contactRepository.updateContact(
-            contactId,
-            updateContact,
+        evaluateRepository.updateEvaluates(
+            evaluateId,
+            updateEvaluates,
             (error, result) => {
                 if (path) {
                     fs.rmSync(path);
@@ -109,15 +106,15 @@ const updateContact = (contactId, requestBody, callback) => {
     }
 };
 
-const getDetailContact = (id, callback) => {
+const getDetailEvaluates = (id, callback) => {
     if (!/^[0-9]+$/.test(id)) {
         callback({ message: "ID phải là số" }, null);
     } else {
-        contactRepository.getDetailContact(id, (error, result) => {
+        evaluateRepository.getDetailEvaluates(id, (error, result) => {
             if (error) {
                 callback(error, null);
             } else if (result.length === 0) {
-                callback({ message: "Contact not found" }, null);
+                callback({ message: "evaluate not found" }, null);
             } else {
                 callback(null, result);
             }
@@ -125,15 +122,15 @@ const getDetailContact = (id, callback) => {
     }
 };
 
-const deleteContact = (id, callback) => {
+const deleteEvaluates = (id, callback) => {
     if (!/^[0-9]+$/.test(id)) {
         callback({ message: "ID phải là số" }, null);
     } else {
-        contactRepository.deleteContact(id, (error, result) => {
+        evaluateRepository.deleteEvaluates(id, (error, result) => {
             if (error) {
                 callback(error, null);
             } else if (result.affectedRows === 0) {
-                callback({ message: "Contact not found" }, null);
+                callback({ message: "evaluate not found" }, null);
             } else {
                 callback(null, result);
             }
@@ -142,9 +139,9 @@ const deleteContact = (id, callback) => {
 };
 
 export default {
-    searchContacts,
-    addContact,
-    updateContact,
-    getDetailContact,
-    deleteContact,
+    searchEvaluates,
+    addEvaluates,
+    updateEvaluates,
+    getDetailEvaluates,
+    deleteEvaluates,
 };

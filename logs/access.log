@@ -1889,3 +1889,7 @@
 ::1 - - [23/Oct/2023:16:14:37 +0000] "GET /users HTTP/1.1" 500 74 "-" "PostmanRuntime/7.32.3"
 ::1 - - [23/Oct/2023:16:15:51 +0000] "GET /users HTTP/1.1" 401 37 "-" "PostmanRuntime/7.32.3"
 ::1 - - [24/Oct/2023:07:01:43 +0000] "GET / HTTP/1.1" 401 37 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36 Edg/118.0.2088.61"
+::1 - - [24/Oct/2023:07:42:59 +0000] "GET /users HTTP/1.1" 401 37 "-" "PostmanRuntime/7.34.0"
+::1 - - [24/Oct/2023:07:45:23 +0000] "GET /users HTTP/1.1" 401 37 "-" "PostmanRuntime/7.34.0"
+::1 - - [24/Oct/2023:07:49:38 +0000] "GET /users HTTP/1.1" 401 37 "-" "PostmanRuntime/7.34.0"
+::1 - - [25/Oct/2023:09:11:26 +0000] "GET /users HTTP/1.1" 401 37 "-" "PostmanRuntime/7.34.0"

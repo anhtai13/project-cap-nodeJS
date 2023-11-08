@@ -22,12 +22,11 @@ const login = (request, response) => {
             response.send(result);
         }
     });
-    // ...
 };
 
 const getAuth = (request, response) => {
     // Gọi hàm authService.getAuth để lấy thông tin xác thực của người dùng
-    authService.getAuth(request.auth.id, (error, result) => {
+    authService.getAuth(request.auth.user_id, (error, result) => {
         // Xử lý kết quả từ authService.getAuth
         if (error) {
             // Nếu có lỗi trong quá trình lấy thông tin xác thực, trả về mã lỗi 401 và thông báo lỗi
@@ -43,7 +42,7 @@ const getAuth = (request, response) => {
 
 const logout = (request, response) => {
     // Gọi hàm authService.logout để đăng xuất người dùng
-    authService.logout(request.auth.id, (error, result) => {
+    authService.logout(request.auth.user_id, (error, result) => {
         // Xử lý kết quả từ authService.logout
         if (error) {
             // Nếu có lỗi trong quá trình đăng xuất, trả về mã lỗi 401 và thông báo lỗi

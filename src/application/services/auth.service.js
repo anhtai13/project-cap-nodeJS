@@ -42,10 +42,10 @@ const login = (params, callback) => {
                     null
                 );
             } else {
-                const apiKey = user.id + randomString(128);
+                const apiKey = user.user_id + randomString(128);
 
                 userRepository.createApiKey(
-                    user.id,
+                    user.user_id,
                     apiKey,
                     (error, result) => {
                         if (error) {

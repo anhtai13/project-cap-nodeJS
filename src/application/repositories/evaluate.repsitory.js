@@ -1,10 +1,10 @@
 import getConnection from "../../config/connection.database.js";
 import moment from "moment";
 
-const searchContacts = (params, callback) => {
+const searchEvaluates = (params, callback) => {
     const connection = getConnection();
 
-    let sql = " FROM contacts";
+    let sql = " FROM evaluates";
     const bindParams = [];
 
     const page = params.page || 1;
@@ -50,18 +50,18 @@ const searchContacts = (params, callback) => {
     });
 };
 
-const addContact = (contact, callback) => {
+const addEvaluates = (evaluates, callback) => {
     const connection = getConnection();
 
-    const contactToCreate = {
-        ...contact,
+    const evaluatesToCreate = {
+        ...evaluates,
         created_at: moment().format("YYYY-MM-DD HH:mm:ss"),
         updated_at: moment().format("YYYY-MM-DD HH:mm:ss"),
     };
 
     connection.query(
-        "INSERT INTO contacts SET ?",
-        contactToCreate,
+        "INSERT INTO evaluates SET ?",
+        evaluatesToCreate,
         (error, result) => {
             if (error) {
                 callback(error, null);
@@ -73,11 +73,11 @@ const addContact = (contact, callback) => {
     connection.end();
 };
 
-const getDetailContact = (id, callback) => {
+const getDetailEvaluates = (id, callback) => {
     const connection = getConnection();
 
     connection.query(
-        "SELECT * FROM contacts WHERE contact_id = ?",
+        "SELECT * FROM evaluates WHERE evaluate_id = ?",
         [id],
         (error, result) => {
             if (error) {
@@ -90,16 +90,16 @@ const getDetailContact = (id, callback) => {
     connection.end();
 };
 
-const updateContact = (contactId, params, callback) => {
+const updateEvaluates = (evaluateId, params, callback) => {
     const connection = getConnection();
 
     let sql =
-        "UPDATE contacts SET full_name = ?, email = ?, content = ?, status = ?, updated_id = ?";
+        "UPDATE evaluates SET full_name = ?, email = ?, content = ?, rate = ?, updated_by_id = ?";
     let bindParams = [
         params.full_name,
         params.email,
         params.content,
-        params.status,
+        params.rate,
         params.updated_id,
     ];
 
@@ -108,8 +108,8 @@ const updateContact = (contactId, params, callback) => {
         bindParams.push(params.image);
     }
 
-    sql += " WHERE contact_id = ?";
-    bindParams.push(contactId);
+    sql += " WHERE evaluate_id = ?";
+    bindParams.push(evaluateId);
 
     connection.query(sql, bindParams, (error, result) => {
         if (error) {
@@ -122,11 +122,11 @@ const updateContact = (contactId, params, callback) => {
     connection.end();
 };
 
-const deleteContact = (id, callback) => {
+const deleteEvaluates = (id, callback) => {
     const connection = getConnection();
 
     connection.query(
-        "DELETE FROM contacts WHERE contact_id = ?",
+        "DELETE FROM evaluates WHERE evaluate_id = ?",
         [id],
         (error, result) => {
             if (error) {
@@ -138,11 +138,37 @@ const deleteContact = (id, callback) => {
     );
     connection.end();
 };
-
+// [GET] get rate evluates đánh giá 5 sao
+ const getRateEvaluates = (id, callback) => {
+    const connection = getConnection();
+      connection.query('SELECT * FROM evaluates WHERE evaluate_id = ?', [id],
+    (error, results) => {
+        if (error) {
+          return callback(error, null);
+        }
+        return callback(null, results);
+      });   
+      connection.end();
+  };
+  // [POST] add rate evluates 
+  const addRateEvaluates = (user_id, rate, callback) => {
+    const connection = getConnection();
+    connection.query('INSERT INTO evaluates (user_id, rate) VALUES (?, ?)', [user_id, rate], (error, result) => {
+      if (error) {
+        callback(error, null);
+      } else {
+        callback(null, result.insertId);
+      }
+    });
+    connection.end();
+  };
+  
 export default {
-    searchContacts,
-    addContact,
-    updateContact,
-    getDetailContact,
-    deleteContact,
+    searchEvaluates,
+    addEvaluates,
+    updateEvaluates,
+    getDetailEvaluates,
+    deleteEvaluates,
+    getRateEvaluates,
+    addRateEvaluates,
 };

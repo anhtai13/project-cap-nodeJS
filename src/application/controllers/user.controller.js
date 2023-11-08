@@ -44,7 +44,7 @@ const addUser = (request, response) => {
     userService.addUser(
         {
             ...requestBody,
-            authId: request.auth.id,
+            authId: request.auth.user_id,
             avatar: avatar,
         },
         (error, result) => {
@@ -70,11 +70,11 @@ const getDetailUser = (request, response) => {
         return;
     }
 
-    // Lấy id của người dùng từ tham số trong đường dẫn (URL)
-    const { id } = request.params;
+    // Lấy user_id của người dùng từ tham số trong đường dẫn (URL)
+    const { user_id } = request.params;
 
     // Gọi hàm userService.getDetailUser để lấy thông tin chi tiết của người dùng
-    userService.getDetailUser(id, (error, result) => {
+    userService.getDetailUser(user_id, (error, result) => {
         // Xử lý kết quả từ userService.getDetailUser
         if (error) {
             // Nếu có lỗi trong quá trình lấy thông tin chi tiết, trả về mã lỗi 500 và thông báo lỗi
@@ -98,8 +98,8 @@ const updateUser = (request, response) => {
         return;
     }
 
-    // Lấy id của người dùng từ tham số trong đường dẫn (URL)
-    const userId = request.params.id;
+    // Lấy user_id của người dùng từ tham số trong đường dẫn (URL)
+    const userId = request.params.user_id;
 
     // Lấy dữ liệu từ phần body của yêu cầu
     const requestBody = request.body;
@@ -139,11 +139,11 @@ const deleteUser = (request, response) => {
         return;
     }
 
-    // Lấy id của người dùng từ tham số trong đường dẫn (URL)
-    const { id } = request.params;
+    // Lấy user_id của người dùng từ tham số trong đường dẫn (URL)
+    const { user_id } = request.params;
 
     // Gọi hàm userService.deleteUser để xóa người dùng
-    userService.deleteUser(id, (error, result) => {
+    userService.deleteUser(user_id, (error, result) => {
         // Xử lý kết quả từ userService.deleteUser
         if (error) {
             // Nếu có lỗi trong quá trình xóa, trả về mã lỗi 500 và thông báo lỗi

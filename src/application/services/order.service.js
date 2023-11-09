@@ -1,6 +1,7 @@
 import orderRepository from "../repositories/order.repository.js";
 import fs from "fs";
 import { getFileExtension } from "../../utilities/upload.util.js";
+import moment from "moment";
 
 const searchOrders = (params, callback) => {
     if (params.limit && !/^[0-9]+$/.test(params.limit)) {
@@ -44,12 +45,13 @@ const addOrder = (requestBody, callback) => {
 
             totalPrice += subTotalPrice;
             orderDetails.push({
-                product_id: item.product_id,
-                sku: item.sku,
-                name: item.name,
+                service_id: item.service_id,
+                note: item.note,
                 unit_price: item.unit_price,
                 quantity: item.quantity,
                 sub_total_price: subTotalPrice,
+                address_order: item.address_order,
+                date_receive: moment().format("YYYY-MM-DD"),
             });
         }
 
@@ -57,9 +59,9 @@ const addOrder = (requestBody, callback) => {
             serial_number: new Date().getTime(),
             user_id: requestBody.authId,
             total_price: totalPrice,
-            status: 1,
+            note: requestBody.note,
+            status_id: 1,
             created_by: requestBody.authId,
-            updated_by: requestBody.authId,
         };
 
         orderRepository.addOrder(newOrder, orderDetails, (error, result) => {
@@ -97,13 +99,13 @@ const updateOrder = (orderId, requestBody, callback) => {
         if (typeof params.status !== "string") {
             errors.set("status", "Vai trò phải là chuỗi.");
         } else if (
-            params.status !== "1" &&
-            params.status !== "2" &&
-            params.status !== "3" &&
-            params.status !== "4" &&
-            params.status !== "5" &&
-            params.status !== "6" &&
-            params.status !== "7"
+            params.status_id !== "1" &&
+            params.status_id !== "2" &&
+            params.status_id !== "3" &&
+            params.status_id !== "4" &&
+            params.status_id !== "5" &&
+            params.status_id !== "6" &&
+            params.status_id !== "7"
         ) {
             errors.set("status", "Vai trò chỉ cho phép nhập 1 , 2.");
         }
@@ -131,9 +133,8 @@ const updateOrder = (orderId, requestBody, callback) => {
             user_id: requestBody.user_id,
             order_at: requestBody.order_at,
             total_price: requestBody.total_price,
-            status: requestBody.status,
-            image: image,
-            updated_id: requestBody.authId,
+            note: requestBody.note,
+            status_id: requestBody.status_id,
         };
 
         orderRepository.updateOrder(orderId, updateOrder, (error, result) => {

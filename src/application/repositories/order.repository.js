@@ -60,7 +60,6 @@ const addOrder = (order, orderDetails, callback) => {
             ...order,
             order_at: moment().format("YYYY-MM-DD HH:mm:ss"),
             created_at: moment().format("YYYY-MM-DD HH:mm:ss"),
-            updated_at: moment().format("YYYY-MM-DD HH:mm:ss"),
         };
 
         connection.query(
@@ -104,17 +103,18 @@ const addOrder = (order, orderDetails, callback) => {
         const newOrderDetails = orderDetails.map((orderDetail) => {
             return [
                 orderId,
-                orderDetail.product_id,
-                orderDetail.sku,
-                orderDetail.name,
+                orderDetail.service_id,
+                orderDetail.note,
                 orderDetail.unit_price,
                 orderDetail.quantity,
                 orderDetail.sub_total_price,
+                orderDetail.address_order,
+                orderDetail.date_receive,
             ];
         });
 
         connection.query(
-            "INSERT INTO order_details (order_id, product_id, sku, name, unit_price, quantity, sub_total_price) VALUES ?",
+            "INSERT INTO order_details (order_id, service_id, note, unit_price, quantity, sub_total_price, address_order, date_receive) VALUES ?",
             [newOrderDetails],
             (error, result) => {
                 if (error) {
@@ -161,7 +161,7 @@ const getDetailOrderDetail = (id, callback) => {
     const connection = getConnection();
 
     connection.query(
-        "SELECT rikkei_academy.order_details.*, products.image FROM rikkei_academy.order_details left join products on order_details.product_id=products.product_id WHERE order_id = ?",
+        "SELECT laudry_booking_v1_1.order_details.*, services.image FROM laudry_booking_v1_1.order_details left join services on order_details.service_id=services.service_id WHERE order_id = ?",
         [id],
         (error, result) => {
             if (error) {
@@ -179,13 +179,14 @@ const updateOrder = (orderId, params, callback) => {
     const connection = getConnection();
 
     let sql =
-        "UPDATE orders SET serial_number = ?, user_id = ?, order_at = ? , total_price = ?, status = ?";
+        "UPDATE orders SET serial_number = ?, user_id = ?, order_at = ? , total_price = ?,note = ? ,  status_id = ?";
     let bindParams = [
         params.serial_number,
         params.user_id,
         params.order_at,
         params.total_price,
-        params.status,
+        params.note,
+        params.status_id,
     ];
 
     if (params.image) {

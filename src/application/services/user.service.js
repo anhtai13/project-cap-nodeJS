@@ -76,7 +76,9 @@ const addUser = (requestBody, callback) => {
         }
 
         // Validate password
-        if (typeof params.password !== "string") {
+        if (!params.password) {
+            errors.set("password", "Password không được bỏ trống.");
+        } else if (typeof params.password !== "string") {
             errors.set("password", "Mật khẩu phải là chuỗi.");
         } else if (params.password < 8 || params.password.length > 20) {
             errors.set("password", "Mật khẩu chỉ cho phép từ 8 đến 20 ký tự.");

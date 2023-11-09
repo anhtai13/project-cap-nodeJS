@@ -31,20 +31,20 @@ const addService = (requestBody, callback) => {
         let errors = new Map();
 
         // Validate name service
-        if (!params.name) {
-            errors.set("name", "Tên sản phẩm không được bỏ trống.");
-        } else if (typeof params.name !== "string") {
-            errors.set("name", "Tên sản phẩm phải là chuỗi.");
+        if (!params.name_service) {
+            errors.set("name_service", "Tên sản phẩm không được bỏ trống.");
+        } else if (typeof params.name_service !== "string") {
+            errors.set("name_service", "Tên sản phẩm phải là chuỗi.");
         }
 
-        if (typeof params.category !== "string") {
-            errors.set("category", "Vai trò phải là chuỗi.");
+        if (typeof params.category_id !== "string") {
+            errors.set("category_id", "Vai trò phải là chuỗi.");
         } else if (
-            params.category !== "1" &&
-            params.category !== "2" &&
-            params.category !== "3"
+            params.category_id !== "1" &&
+            params.category_id !== "2" &&
+            params.category_id !== "3"
         ) {
-            errors.set("category", "Vai trò chỉ cho phép nhập 1 hoặc 2 hoặc 3");
+            errors.set("category_id", "Vai trò chỉ cho phép nhập 1 hoặc 2 hoặc 3");
         }
         return errors;
     };
@@ -67,7 +67,7 @@ const addService = (requestBody, callback) => {
 
         const newService = {
             name_service: requestBody.name_service,
-            category: requestBody.category,
+            category_id: requestBody.category_id,
             description: requestBody.description,
             unit_price: requestBody.unit_price,
             image: image,
@@ -101,18 +101,18 @@ const updateService = (serviceId, requestBody, callback) => {
         let errors = new Map();
 
         // Validate name service
-        if (!params.name) {
-            errors.set("name", "Tên sản phẩm không được bỏ trống.");
-        } else if (typeof params.name !== "string") {
-            errors.set("name", "Tên sản phẩm phải là chuỗi.");
+        if (!params.name_service) {
+            errors.set("name_service", "Tên sản phẩm không được bỏ trống.");
+        } else if (typeof params.name_service !== "string") {
+            errors.set("name_service", "Tên sản phẩm phải là chuỗi.");
         }
 
-        if (typeof params.category !== "string") {
-            errors.set("category", "Vai trò phải là chuỗi.");
+        if (typeof params.category_id !== "string") {
+            errors.set("category_id", "Vai trò phải là chuỗi.");
         } else if (
-            params.category !== "1" &&
-            params.category !== "2" &&
-            params.category !== "3"
+            params.category_id !== "1" &&
+            params.category_id !== "2" &&
+            params.category_id !== "3"
         ) {
             errors.set("category", "Vai trò chỉ cho phép nhập 1, 2, 3.");
         }
@@ -138,7 +138,7 @@ const updateService = (serviceId, requestBody, callback) => {
 
         const updateService = {
             name_service: requestBody.name_service,
-            category: requestBody.category,
+            category_id: requestBody.category_id,
             description: requestBody.description,
             unit_price: requestBody.unit_price,
             image: image,

@@ -24,7 +24,7 @@ const searchOrderDetails = (params, callback) => {
             callback(error, null);
         } else if (countResult[0].total !== 0) {
             const selectColumnsQuery =
-                "SELECT order_id, product_id, sku, name, unit_price, quantity, sub_total_price" +
+                "SELECT order_id, service_id,note, unit_price, quantity, sub_total_price, address_order, date_receive" +
                 sql +
                 ` LIMIT ${limit} OFFSET ${offset}`;
             connection.query(

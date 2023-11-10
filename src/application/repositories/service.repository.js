@@ -4,7 +4,7 @@ import moment from "moment";
 const searchServices = (params, callback) => {
     const connection = getConnection();
 
-    let sql = " FROM Services";
+    let sql = " FROM services";
     const bindParams = [];
 
     const page = params.page || 1;
@@ -60,7 +60,7 @@ const addService = (Service, callback) => {
     };
 
     connection.query(
-        "INSERT INTO Services SET ?",
+        "INSERT INTO services SET ?",
         ServiceToCreate,
         (error, result) => {
             if (error) {
@@ -77,7 +77,7 @@ const getDetailService = (id, callback) => {
     const connection = getConnection();
 
     connection.query(
-        "SELECT * FROM Services WHERE Service_id = ?",
+        "SELECT * FROM services WHERE service_id = ?",
         [id],
         (error, result) => {
             if (error) {
@@ -94,11 +94,11 @@ const updateService = (serviceId, params, callback) => {
     const connection = getConnection();
 
     let sql =
-        "UPDATE services SET name = ?, description = ?, category = ?, unit_price = ?, updated_by_id = ?";
+        "UPDATE services SET name_service = ?, description = ?, category_id = ?, unit_price = ?, updated_by_id = ?";
     let bindParams = [
-        params.name,
+        params.name_service,
         params.description,
-        params.category,
+        params.category_id,
         params.unit_price,
         params.updated_by_id,
     ];

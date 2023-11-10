@@ -126,6 +126,7 @@ const getRateEvaluates = (request, response) => {
         }
     });
 };
+
 // add rate evaluates controller
 const addRateEvaluates = (request, response) => {
     if (request.auth.role !== 2) {
@@ -134,7 +135,7 @@ const addRateEvaluates = (request, response) => {
         });
         return;
     }
-    const { user_id , rate } = request.params;
+    const { user_id, rate } = request.params;
     evaluateService.addRateEvaluates(user_id,rate, (error,result) =>{
         if(error){
             response.status(500).send({

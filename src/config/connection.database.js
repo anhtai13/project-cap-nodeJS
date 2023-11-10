@@ -1,11 +1,11 @@
-import mysql from "mysql2";
+import mysql from "mysql";
 
 const getConnection = () => {
     return mysql.createConnection({
         host: "127.0.0.1",
         port: 3306,
         user: "root",
-        password: "123456",
+        password: "password",
         database: "laudry_booking_v1_1",
     });
 };

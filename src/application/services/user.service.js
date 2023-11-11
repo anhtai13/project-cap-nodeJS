@@ -121,8 +121,8 @@ const addUser = (requestBody, callback) => {
             password: requestBody.password,
             role: requestBody.role,
             avatar: avatar,
-            created_by: requestBody.authId,
-            updated_by: requestBody.authId,
+            created_by_id: requestBody.authId,
+            updated_by_id: requestBody.authId,
         };
 
         // Gọi repository để thêm người dùng mới vào cơ sở dữ liệu
@@ -144,10 +144,11 @@ const addUser = (requestBody, callback) => {
 
 const getDetailUser = (id, callback) => {
     // Kiểm tra xem `id` có phải là số hay không
-    if (!/^[0-9]+$/.test(id)) {
-        // Nếu `id` không phải là số, gọi lại hàm callback với thông báo lỗi
-        callback({ message: "ID phải là số" }, null);
-    } else {
+    // if (!/^[0-9]+$/.test(id)) {
+    // Nếu `id` không phải là số, gọi lại hàm callback với thông báo lỗi
+    // callback({ message: "ID phải là số" }, null);
+    // } else
+    {
         // Nếu `id` là số, gọi hàm `userRepository.getDetailUser` để lấy thông tin người dùng dựa trên `id`
         userRepository.getDetailUser(id, (error, result) => {
             if (error) {

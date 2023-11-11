@@ -4,7 +4,7 @@ import getConnection from "./../../config/connection.database.js";
 const searchOrders = (params, callback) => {
     const connection = getConnection();
 
-    let sql = " FROM orders INNER JOIN users ON users.id = orders.user_id";
+    let sql = " FROM orders INNER JOIN users ON users.user_id = orders.user_id";
     const bindParams = [];
 
     const page = params.page || 1;
@@ -179,7 +179,7 @@ const updateOrder = (orderId, params, callback) => {
     const connection = getConnection();
 
     let sql =
-        "UPDATE orders SET serial_number = ?, user_id = ?, order_at = ? , total_price = ?,note = ? ,  status_id = ?";
+        "UPDATE orders SET serial_number = ?, user_id = ?, order_at = ?, total_price = ?, note = ?, status_id = ?";
     let bindParams = [
         params.serial_number,
         params.user_id,

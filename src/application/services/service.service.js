@@ -44,7 +44,10 @@ const addService = (requestBody, callback) => {
             params.category_id !== "2" &&
             params.category_id !== "3"
         ) {
-            errors.set("category_id", "Vai trò chỉ cho phép nhập 1 hoặc 2 hoặc 3");
+            errors.set(
+                "category_id",
+                "Vai trò chỉ cho phép nhập 1 hoặc 2 hoặc 3"
+            );
         }
         return errors;
     };
@@ -102,9 +105,9 @@ const updateService = (serviceId, requestBody, callback) => {
 
         // Validate name service
         if (!params.name_service) {
-            errors.set("name_service", "Tên sản phẩm không được bỏ trống.");
+            errors.set("name_service", "Tên dịch vụ không được bỏ trống.");
         } else if (typeof params.name_service !== "string") {
-            errors.set("name_service", "Tên sản phẩm phải là chuỗi.");
+            errors.set("name_service", "Tên dịch vụ phải là chuỗi.");
         }
 
         if (typeof params.category_id !== "string") {

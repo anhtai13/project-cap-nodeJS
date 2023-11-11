@@ -35,13 +35,10 @@ const searchUsers = (params, callback) => {
                     if (error) {
                         callback(error, null);
                     } else {
-                        callback(
-                            null,
-                            // {
-                            // total: countResult[0].total,
-                            // records: result,}
-                            "success"
-                        );
+                        callback(null, {
+                            total: countResult[0].total,
+                            records: result,
+                        });
                     }
                 }
             );

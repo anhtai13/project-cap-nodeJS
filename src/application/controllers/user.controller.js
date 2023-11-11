@@ -71,10 +71,10 @@ const getDetailUser = (request, response) => {
     }
 
     // Lấy user_id của người dùng từ tham số trong đường dẫn (URL)
-    const { user_id } = request.params;
-
+    const { id } = request.params;
+    console.log(id);
     // Gọi hàm userService.getDetailUser để lấy thông tin chi tiết của người dùng
-    userService.getDetailUser(user_id, (error, result) => {
+    userService.getDetailUser(Number(id), (error, result) => {
         // Xử lý kết quả từ userService.getDetailUser
         if (error) {
             // Nếu có lỗi trong quá trình lấy thông tin chi tiết, trả về mã lỗi 500 và thông báo lỗi

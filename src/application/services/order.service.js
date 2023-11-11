@@ -61,7 +61,7 @@ const addOrder = (requestBody, callback) => {
             total_price: totalPrice,
             note: requestBody.note,
             status_id: 1,
-            created_by: requestBody.authId,
+            created_by_id: requestBody.authId,
         };
 
         orderRepository.addOrder(newOrder, orderDetails, (error, result) => {

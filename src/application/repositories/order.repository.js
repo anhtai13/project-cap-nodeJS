@@ -189,10 +189,10 @@ const updateOrder = (orderId, params, callback) => {
         params.status_id,
     ];
 
-    if (params.image) {
-        sql += " image = ?";
-        bindParams.push(params.image);
-    }
+    // if (params.image) {
+    //     sql += " image = ?";
+    //     bindParams.push(params.image);
+    // }
 
     sql += " WHERE order_id = ?";
     bindParams.push(orderId);

@@ -91,23 +91,23 @@ const updateOrder = (orderId, requestBody, callback) => {
 
         // Validate name product
         if (!params.serial_number) {
-            errors.set("serial_number", "Tên sản phẩm không được bỏ trống.");
+            errors.set("serial_number", "Ma đơn hàng không được bỏ trống.");
         } else if (typeof params.serial_number !== "string") {
             errors.set("serial_number", "Tên sản phẩm phải là chuỗi.");
         }
 
-        if (typeof params.status !== "string") {
-            errors.set("status", "Vai trò phải là chuỗi.");
+        if (typeof params.status !== "number") {
+            errors.set("status", "Trạng thái đơn hàng phải là số.");
         } else if (
-            params.status_id !== "1" &&
-            params.status_id !== "2" &&
-            params.status_id !== "3" &&
-            params.status_id !== "4" &&
-            params.status_id !== "5" &&
-            params.status_id !== "6" &&
-            params.status_id !== "7"
+            params.status != "1" &&
+            params.status != "2" &&
+            params.status != "3" &&
+            params.status != "4" &&
+            params.status != "5" &&
+            params.status != "6" &&
+            params.status != "7"
         ) {
-            errors.set("status", "Vai trò chỉ cho phép nhập 1 , 2.");
+            errors.set("status", "Trạng thái đơn hàng chỉ cho phép nhập 1-7.");
         }
 
         return errors;
@@ -118,23 +118,24 @@ const updateOrder = (orderId, requestBody, callback) => {
     if (validateErrors.size !== 0) {
         callback(Object.fromEntries(validateErrors), null);
     } else {
-        let image = null;
+        // let image = null;
 
-        if (requestBody.image) {
-            const imageExtension = getFileExtension(originalName);
-            image = `image/${requestBody.name}.${imageExtension}`;
-            const imageLocation = `./public/${image}`;
+        // if (requestBody.image) {
+        //     const imageExtension = getFileExtension(originalName);
+        //     image = `image/${requestBody.name}.${imageExtension}`;
+        //     const imageLocation = `./public/${image}`;
 
-            // Copy upload file to saving location
-            fs.cpSync(path, imageLocation);
-        }
+        //     // Copy upload file to saving location
+        //     fs.cpSync(path, imageLocation);
+        // }
 
         const updateOrder = {
             user_id: requestBody.user_id,
-            order_at: requestBody.order_at,
+            serial_number: requestBody.serial_number,
+            order_at: new Date(requestBody.order_at),
             total_price: requestBody.total_price,
             note: requestBody.note,
-            status_id: requestBody.status_id,
+            status_id: requestBody.status,
         };
 
         orderRepository.updateOrder(orderId, updateOrder, (error, result) => {

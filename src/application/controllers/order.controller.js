@@ -93,9 +93,9 @@ const updateOrder = (request, response) => {
     }
 
     const ordertId = request.params.id;
-
     const requestBody = request.body;
 
+    console.log("check params", ordertId, requestBody);
     orderService.updateOrder(
         ordertId,
         {

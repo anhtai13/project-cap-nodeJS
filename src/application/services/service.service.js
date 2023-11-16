@@ -42,11 +42,13 @@ const addService = (requestBody, callback) => {
         } else if (
             params.category_id !== "1" &&
             params.category_id !== "2" &&
-            params.category_id !== "3"
+            params.category_id !== "3" &&
+            params.category_id !== "4" &&
+            params.category_id !== "5"
         ) {
             errors.set(
                 "category_id",
-                "Vai trò chỉ cho phép nhập 1 hoặc 2 hoặc 3"
+                "Vai trò chỉ cho phép nhập 1, 2, 3, 4 và 5 "
             );
         }
         return errors;
@@ -74,8 +76,7 @@ const addService = (requestBody, callback) => {
             description: requestBody.description,
             unit_price: requestBody.unit_price,
             image: image,
-            create_by_id: requestBody.authId,
-            updated_by_id: requestBody.authId,
+            created_by_id: requestBody.authId,
         };
 
         serviceRepository.addService(newService, (error, result) => {
@@ -115,9 +116,14 @@ const updateService = (serviceId, requestBody, callback) => {
         } else if (
             params.category_id !== "1" &&
             params.category_id !== "2" &&
-            params.category_id !== "3"
+            params.category_id !== "3" &&
+            params.category_id !== "4" &&
+            params.category_id !== "5"
         ) {
-            errors.set("category", "Vai trò chỉ cho phép nhập 1, 2, 3.");
+            errors.set(
+                "category_id",
+                "Vai trò chỉ cho phép nhập 1, 2, 3, 4 or 5"
+            );
         }
 
         return errors;
@@ -169,7 +175,7 @@ const getDetailService = (id, callback) => {
     if (!/^[0-9]+$/.test(id)) {
         callback({ message: "ID phải là số" }, null);
     } else {
-        serviceRepositoryRepository.getDetailService(id, (error, result) => {
+        serviceRepository.getDetailService(id, (error, result) => {
             if (error) {
                 callback(error, null);
             } else if (result.length === 0) {

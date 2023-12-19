@@ -19,14 +19,14 @@ router.get('/users/:id', userController.getDetailUser);
 router.put('/users', userController.updateUser);
 router.delete('/users/:id', userController.deleteUser);
 
-// Product management
-router.get('/category', productController.getCategory)
-router.get('/category/:category', productController.getProductByCategory);
-router.get('/product', productController.getListProducts);
-router.post('/product', productController.addProduct);
-router.get('/product/:id', productController.getDetailProduct);
-router.put('/product', productController.updateProduct);
-router.delete('/product/:id', productController.deleteProduct);
+// Service management
+router.get('/category', serviceController.getServiceCategory)
+router.get('/category/:category_name', serviceController.getServiceByCategory);
+router.get('/service', serviceController.getListService);
+router.post('/service', serviceController.addService);
+router.get('/service/:service_id', serviceController.getDetailService);
+router.put('/service', serviceController.updateService);
+router.delete('/service/:service_id', serviceController.deleteService);
 
 // Order management
 router.get('/order', orderController.getListOrder);
@@ -41,10 +41,10 @@ router.delete('/order/:id', orderController.deleteOrder);
 router.post('/order_details', orderDetailController.getListOrderDetail)
 router.get('/order_details/:id', orderDetailController.getOrderDetailById)
 
-// Contact management
-router.get('/contact', contactController.getListContact)
-router.get('/contact/:id', contactController.getDetailContact)
-router.post('/contact', contactController.addContact)
-router.put('/contact', contactController.updateContact)
-router.delete('/contact/:id', contactController.deleteContact)
+// Evaluate management
+router.get('/evaluate', evaluateController.getListEvaluate)
+router.get('/evaluate/:id', evaluateController.getDetailEvaluate)
+router.post('/evaluate', evaluateController.addEvaluate)
+router.put('/evaluate', evaluateController.updateEvaluate)
+router.delete('/evaluate/:id', evaluateController.deleteEvaluate)
 export default router;

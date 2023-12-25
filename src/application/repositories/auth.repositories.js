@@ -4,6 +4,10 @@ import { randomString } from "../../utils/randomString.js";
 const connection = getConnection();
 const login = (params, callback) => {
   console.log(params);
+  if(params.username === "" || params.password === ""){
+    callback({message: "Bạn hãy nhập đầy đủ thông tin để đăng nhập"}, null);
+    return;
+  }
   if (params.role == 1) {
     connection.query(
       "SELECT * FROM users WHERE username = ? and role=1",
@@ -14,7 +18,7 @@ const login = (params, callback) => {
           return;
         }
         if (results.length === 0) {
-          callback({ message: "Admin not found" }, null);
+          callback({ message: "Tên đăng nhập bị sai" }, null);
           return;
         }
         bcrypt.compare(
@@ -35,6 +39,10 @@ const login = (params, callback) => {
                   callback(null, { key: key, id: results[0].user_id });
                 }
               );
+            }
+            else{
+              callback({ message: "Mật khẩu bị sai"}, null)
+              return;
             }
           }
         );
@@ -52,7 +60,7 @@ const login = (params, callback) => {
           return;
         }
         if (results.length === 0) {
-          callback({ message: "User not found" }, null);
+          callback({ message: "Tên đăng nhập bị sai" }, null);
           return;
         }
         bcrypt.compare(
@@ -73,6 +81,9 @@ const login = (params, callback) => {
                   callback(null, { key: key, id: results[0].user_id });
                 }
               );
+            }else{
+              callback({ message: "Mật khẩu bị sai"}, null)
+              return;
             }
           }
         );
@@ -84,7 +95,7 @@ const login = (params, callback) => {
 const logout = (params, callback) => {
   connection.query(
     "UPDATE users SET api_key = null WHERE api_key = ?",
-    [params.key],
+    [params.key.key],
     (error, results) => {
       if (error) {
         callback({ message: "Something went wrong!" }, null);

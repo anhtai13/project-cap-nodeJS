@@ -32,24 +32,9 @@ const getCategory = (params, callback) => {
     }
   });
 };
-
-// const addProduct = (params, callback) => {
-//     if (!params.name && !params.sku && !params.price && !params.category) {
-//         callback({ message: "Vui lòng điền đầy đủ thông tin" }, null)
-//     } else if (!validatePrice(params.price)) {
-//         callback({ message: "Lỗi: Số tiền không thể là số âm. Vui lòng nhập một số tiền hợp lệ " }, null)
-//     } else {
-//         productRepositories.addProduct(params, (err, result) => {
-//             if (err) {
-//                 callback(err, null);
-//             } else {
-//                 callback(null, result);
-//             }
-//         });
-//     }
-// }
+// hàm add dịch vụ
 const addProduct = (params, callback) => {
-    if (!params.name && !params.sku && !params.price) {
+    if (!params.name && !params.price) {
         callback({ message: "Please complete all information" }, null);
       }
     else if (!params.name) {
@@ -94,7 +79,7 @@ const updateProduct = (params, callback) => {
     !params.price &&
     !params.category
   ) {
-    callback({ message: "Vui lòng điền đầy đủ thông tin" }, null);
+    callback({ message: "Please complete all information" }, null);
   } else if (!validatePrice(params.price)) {
     callback({ message: "Invalid price" }, null);
   } else {

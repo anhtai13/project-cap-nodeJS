@@ -15,16 +15,16 @@ const searchUsers = (params, callback) => {
 // Hàm thêm người dùng mới
 const addUser = (params, callback) => {
     if (!params.username && !params.password && !params.email && !params.first_name && !params.last_name) {
-        callback({ message: "Vui lòng điền đầy đủ thông tin" }, null)
+        callback({ message: "Please complete all information" }, null)
     }
     else if (!validateEmail(params.email)) {
-        callback({ message: "Email không hợp lệ!" }, null);
+        callback({ message: "Invalid email!" }, null);
     } else if (!validatePassword(params.password)) {
-        callback({ message: "Mật khẩu không hợp lệ!" }, null);
+        callback({ message: "Invalid password!" }, null);
     } else if (!validateUserName(params.username)) {
-        callback({ message: "Tên người dùng không hợp lệ!" }, null);
+        callback({ message: "Invalid username!" }, null);
     } else if (!validateRoleUser(params.role)) {
-        callback({ message: "Vai trò không hợp lệ!" }, null);
+        callback({ message: "Invalid role!" }, null);
     } else {
         userRepositories.addUser(params, (err, result) => {
             if (err) {
@@ -39,7 +39,7 @@ const addUser = (params, callback) => {
 // Hàm lấy chi tiết người dùng
 const getDetailUser = (params, callback) => {
     if (!validateIdUserDetails(params.id)) {
-        callback({ message: "ID không hợp lệ!" }, null);
+        callback({ message: "Invalid ID!" }, null);
     } else {
         userRepositories.getDetailUser(params, (err, result) => {
             if (err) {
@@ -54,12 +54,13 @@ const getDetailUser = (params, callback) => {
 // Hàm cập nhật thông tin người dùng
 const updateUser = (params, callback) => {
     if (!params.username && !params.password && !params.email && !params.first_name && !params.last_name) {
-        callback({ message: "Vui lòng điền đầy đủ thông tin" }, null)
-    }
-    else if (!validateEmail(params.email)) {
-        callback({ data: "email", message: "Email không hợp lệ!" }, null);
+        callback({ message: "Please fill in all the information" }, null)
+    } else if (!validatePassword(params.password)) {
+        callback({ message: "Invalid password!" }, null);
+    } else if (!validateEmail(params.email)) {
+        callback({ data: "email", message: "Invalid email!" }, null);
     } else if (!validateUserName(params.username)) {
-        callback({ data: "username", message: "Tên người dùng không hợp lệ!" }, null);
+        callback({ data: "username", message: "Invalid username!" }, null);
     } else {
         userRepositories.updateUser(params, (err, result) => {
             if (err) {
@@ -71,10 +72,11 @@ const updateUser = (params, callback) => {
     }
 };
 
+
 // Hàm xóa người dùng
 const deleteUser = (params, callback) => {
     if (!validateIdUserDetails(params.id)) {
-        callback({ message: "ID không hợp lệ" }, null);
+        callback({ message: "Invalid ID!" }, null);
     } else {
         userRepositories.deleteUser(params, (err, result) => {
             if (err) {

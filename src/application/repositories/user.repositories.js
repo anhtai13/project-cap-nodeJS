@@ -185,7 +185,7 @@ const addUser = (params, callback) => {
 
 const getDetailUser = (params, callback) => {
   connection.query(
-    `SELECT * FROM users WHERE id=?`,
+    `SELECT * FROM users WHERE user_id=?`,
     [params.id],
     (error, results, fields) => {
       if (error) {

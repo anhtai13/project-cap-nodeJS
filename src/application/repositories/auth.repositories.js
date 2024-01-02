@@ -1,6 +1,7 @@
 import getConnection from "../../config/connection.database.js";
 import bcrypt from "bcryptjs";
 import { randomString } from "../../utils/randomString.js";
+
 const connection = getConnection();
 const login = (params, callback) => {
   console.log(params);
@@ -49,6 +50,7 @@ const login = (params, callback) => {
       }
     );
   }
+  
   if (params.role == 3) {
     connection.query(
       "SELECT * FROM users WHERE username = ?",

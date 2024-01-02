@@ -50,6 +50,7 @@ const getProductByCategory = (params, callback) => {
     }
   );
 };
+
 const addProduct = (params, callback) => {
   connection.query(
     "insert into services (description,name_service,unit_price,image,category_id,created_at,created_by_id,updated_at,updated_by_id) values (?,?,?,?,?,?,?,?,?)",

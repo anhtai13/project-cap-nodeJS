@@ -68,7 +68,6 @@ const updateOrder = (req, res) => {
   const orderUpdate = req.body;
   orderService.updateOrder(orderUpdate, (err, result) => {
     if (err) {
-      console.log(err);
       res.status(500).send({
         errData: err.data,
         error: err.message,

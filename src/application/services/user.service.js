@@ -64,9 +64,7 @@ const getDetailUser = (params, callback) => {
 
 // Hàm cập nhật thông tin người dùng
 const updateUser = (params, callback) => {
-  if (!validatePassword(params.password)) {
-    callback({ message: "Invalid password!" }, null);
-  } else {
+  
     userRepositories.updateUser(params, (err, result) => {
       if (err) {
         callback(err, null);
@@ -75,7 +73,6 @@ const updateUser = (params, callback) => {
       }
     });
   }
-};
 
 // Hàm xóa người dùng
 const deleteUser = (params, callback) => {

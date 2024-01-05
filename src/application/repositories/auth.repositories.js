@@ -4,7 +4,6 @@ import { randomString } from "../../utils/randomString.js";
 
 const connection = getConnection();
 const login = (params, callback) => {
-  console.log(params);
   if(params.username === "" || params.password === ""){
     callback({message: "Bạn hãy nhập đầy đủ thông tin để đăng nhập"}, null);
     return;

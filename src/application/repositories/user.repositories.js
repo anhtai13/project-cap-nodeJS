@@ -210,9 +210,35 @@ const updateUser = (params, callback) => {
         callback({ message: "Something wrong!" }, null);
       } else if (results.length == 0) {
         callback({ message: "User not found" }, null);
+      } else if (params.password.length > 15) {
+        connection.query(
+          "update users set username=?,email=?,first_name=?,last_name=?,role=?,avatar=?,address_user=?,phone_number=?,created_at=?,updated_at=?,created_by_id=?,updated_by_id=? where user_id=?",
+          [
+            params.username,
+            params.email,
+            params.first_name,
+            params.last_name,
+            params.role,
+            params.avatar,
+            params.address_user,
+            params.phone_number,
+            params.created_at,
+            params.updated_at,
+            params.created_by_id,
+            params.updated_by_id,
+            params.id,
+          ],
+          (err, results) => {
+            if (err) {
+              callback({ message: "Something wrong!" }, null);
+            } else {
+              callback(null, results);
+            }
+          }
+        );
       } else {
         connection.query(
-          "update users set username=?,email=?,password=?,first_name=?,last_name=?,role=?,avatar=?,created_at=?,updated_at=?,created_by_id=?,updated_by_id=? where user_id=?",
+          "update users set username=?,email=?,password=?,first_name=?,last_name=?,role=?,avatar=?,address_user=?,phone_number=?,created_at=?,updated_at=?,created_by_id=?,updated_by_id=? where user_id=?",
           [
             params.username,
             params.email,
@@ -221,6 +247,8 @@ const updateUser = (params, callback) => {
             params.last_name,
             params.role,
             params.avatar,
+            params.address_user,
+            params.phone_number,
             params.created_at,
             params.updated_at,
             params.created_by_id,

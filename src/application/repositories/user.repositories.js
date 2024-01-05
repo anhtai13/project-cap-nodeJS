@@ -201,7 +201,6 @@ const getDetailUser = (params, callback) => {
 
 const updateUser = (params, callback) => {
   const hashedPassword = bcrypt.hashSync(params.password, salt);
-
   connection.query(
     `SELECT * FROM users WHERE user_id=?`,
     [params.id],
@@ -210,7 +209,7 @@ const updateUser = (params, callback) => {
         callback({ message: "Something wrong!" }, null);
       } else if (results.length == 0) {
         callback({ message: "User not found" }, null);
-      } else if (params.password.length > 15) {
+      } else if (params.password.length < 1) {
         connection.query(
           "update users set username=?,email=?,first_name=?,last_name=?,role=?,avatar=?,address_user=?,phone_number=?,created_at=?,updated_at=?,created_by_id=?,updated_by_id=? where user_id=?",
           [

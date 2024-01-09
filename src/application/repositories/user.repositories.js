@@ -24,108 +24,46 @@ const searchUsers = (params, callback) => {
           }
         }
       );
-    } else if (params.sortName) {
-      connection.query(
-        `SELECT * FROM users order by username ${params.sortName} LIMIT ${limitDefault} OFFSET ${offsetDefault}`,
-        (error, results) => {
-          if (error) {
-            callback({ message: "Something wrong!" }, null);
-          } else if (results.length == 0) {
-            callback({ message: "User not found" }, null);
-          } else {
-            callback(null, results);
-          }
-        }
-      );
-    } else if (params.sortRole) {
-      connection.query(
-        `SELECT * FROM users order by role ${params.sortRole} LIMIT ${limitDefault} OFFSET ${offsetDefault}`,
-        (error, results) => {
-          if (error) {
-            callback({ message: "Something wrong!" }, null);
-          } else if (results.length == 0) {
-            callback({ message: "User not found" }, null);
-          } else {
-            callback(null, results);
-          }
-        }
-      );
-    } else if (params.sortLastName) {
-      connection.query(
-        `SELECT * FROM users order by role ${params.sortLastName} LIMIT ${limitDefault} OFFSET ${offsetDefault}`,
-        (error, results) => {
-          if (error) {
-            callback({ message: "Something wrong!" }, null);
-          } else if (results.length == 0) {
-            callback({ message: "User not found" }, null);
-          } else {
-            callback(null, results);
-          }
-        }
-      );
-    } else {
-      connection.query(`SELECT * FROM users`, (error, results) => {
-        if (error) {
-          callback({ message: "Something wrong!" }, null);
-        } else {
-          callback(null, results);
-        }
-      });
     }
-  } else {
-    if (params.name) {
-      const safeParam = params.name.replace("'", "\\'");
-      connection.query(
-        `SELECT * FROM users WHERE username LIKE '%${safeParam}%' LIMIT ${limitDefault} OFFSET ${offsetDefault}`,
-        (error, results) => {
-          if (error) {
-            callback({ message: "Something wrong!" }, null);
-          } else if (results.length == 0) {
-            callback({ message: "User not found" }, null);
-          } else {
-            callback(null, results);
-          }
-        }
-      );
-    } else if (params.sortName) {
-      connection.query(
-        `SELECT * FROM users order by username ${params.sortName} LIMIT ${limitDefault} OFFSET ${offsetDefault}`,
-        (error, results) => {
-          if (error) {
-            callback({ message: "Something wrong!" }, null);
-          } else if (results.length == 0) {
-            callback({ message: "User not found" }, null);
-          } else {
-            callback(null, results);
-          }
-        }
-      );
-    } else if (params.sortRole) {
-      connection.query(
-        `SELECT * FROM users order by role ${params.sortRole} LIMIT ${limitDefault} OFFSET ${offsetDefault}`,
-        (error, results) => {
-          if (error) {
-            callback({ message: "Something wrong!" }, null);
-          } else if (results.length == 0) {
-            callback({ message: "User not found" }, null);
-          } else {
-            callback(null, results);
-          }
-        }
-      );
-    } else if (params.sortLastName) {
-      connection.query(
-        `SELECT * FROM users order by role ${params.sortLastName} LIMIT ${limitDefault} OFFSET ${offsetDefault}`,
-        (error, results) => {
-          if (error) {
-            callback({ message: "Something wrong!" }, null);
-          } else if (results.length == 0) {
-            callback({ message: "User not found" }, null);
-          } else {
-            callback(null, results);
-          }
-        }
-      );
+  // } else if (params.sortName) {
+  //     connection.query(
+  //       `SELECT * FROM users order by username ${params.sortName} LIMIT ${limitDefault} OFFSET ${offsetDefault}`,
+  //       (error, results) => {
+  //         if (error) {
+  //           callback({ message: "Something wrong!" }, null);
+  //         } else if (results.length == 0) {
+  //           callback({ message: "User not found" }, null);
+  //         } else {
+  //           callback(null, results);
+  //         }
+  //       }
+  //     );
+  //   } else if (params.sortRole) {
+  //     connection.query(
+  //       `SELECT * FROM users order by role ${params.sortRole} LIMIT ${limitDefault} OFFSET ${offsetDefault}`,
+  //       (error, results) => {
+  //         if (error) {
+  //           callback({ message: "Something wrong!" }, null);
+  //         } else if (results.length == 0) {
+  //           callback({ message: "User not found" }, null);
+  //         } else {
+  //           callback(null, results);
+  //         }
+  //       }
+  //     );
+  //   } else if (params.sortLastName) {
+      // connection.query(
+      //   `SELECT * FROM users order by role ${params.sortLastName} LIMIT ${limitDefault} OFFSET ${offsetDefault}`,
+      //   (error, results) => {
+      //     if (error) {
+      //       callback({ message: "Something wrong!" }, null);
+      //     } else if (results.length == 0) {
+      //       callback({ message: "User not found" }, null);
+      //     } else {
+      //       callback(null, results);
+      //     }
+      //   }
+      // );
     } else {
       connection.query(`SELECT * FROM users`, (error, results) => {
         if (error) {
@@ -136,7 +74,7 @@ const searchUsers = (params, callback) => {
       });
     }
   }
-};
+
 
 const addUser = (params, callback) => {
   const hashedPassword = bcrypt.hashSync(params.password, salt);

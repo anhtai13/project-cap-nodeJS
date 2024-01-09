@@ -113,8 +113,7 @@ const getDetailOrder = (params, callback) => {
 
 const getDetailOrderById = (params, callback) => {
   connection.query(
-    `SELECT orders.*, order_details.note,order_details.unit_price,order_details.sub_total_price,order_details.quantity,order_details.address_order, order_details.date_receive
-     FROM orders left join order_details on orders.order_id=order_details.order_id where orders.order_id=?`,
+    `SELECT orders.*, order_details.*, services.* FROM order_details left join orders on orders.order_id=order_details.order_id left join services on order_details.service_id=services.service_id where orders.order_id=?`,
     [+params.id],
     (error, results, fields) => {
       if (error) {
